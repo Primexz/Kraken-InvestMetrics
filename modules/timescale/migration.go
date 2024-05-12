@@ -26,5 +26,16 @@ func migrateTimescale() {
 	// #nosec G104
 	ConnectionPool.Exec(Context, "SELECT add_compression_policy('investment_exporter', compress_after => INTERVAL '60d');")
 
+	// #nosec G104
+	ConnectionPool.Exec(Context, `CREATE TABLE IF NOT EXISTS purchases (
+		refid TEXT PRIMARY KEY,
+		time TIMESTAMPTZ NOT NULL,
+		amount DOUBLE PRECISION,
+		fee DOUBLE PRECISION
+	);`)
+
+	// #nosec G104
+	ConnectionPool.Exec(Context, "SELECT create_hypertable ('purchases', by_range ('time', INTERVAL '1 month'), if_not_exists => TRUE);")
+
 	log.Info("Timescale migration done")
 }

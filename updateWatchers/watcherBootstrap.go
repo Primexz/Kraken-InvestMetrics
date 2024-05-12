@@ -1,14 +1,15 @@
 package watcher
 
 import (
+	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
 	watcherClient "github.com/Primexz/Kraken-InvestMetrics/updateWatchers/watchers"
-	"github.com/Primexz/Kraken-InvestMetrics/xPub"
 	"github.com/primexz/KrakenDCA/logger"
 )
 
 var (
-	XPubWatcher   *watcherClient.XPubWatcher
-	KrakenWatcher *watcherClient.KrakenWatcher
+	XPubWatcher     *watcherClient.XPubWatcher
+	KrakenWatcher   *watcherClient.KrakenWatcher
+	PurchaseWatcher *watcherClient.PurchaseWatcher
 
 	log *logger.Logger
 )
@@ -27,4 +28,7 @@ func BootstrapWatchers() {
 
 	KrakenWatcher = watcherClient.NewKrakenWatcher()
 	KrakenWatcher.StartRoutine()
+
+	PurchaseWatcher = watcherClient.NewPurchaseWatcher()
+	PurchaseWatcher.StartRoutine()
 }

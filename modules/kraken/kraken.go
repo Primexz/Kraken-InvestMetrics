@@ -63,7 +63,7 @@ func (k *KrakenApi) GetCachePayedToKraken() (float64, error) {
 }
 
 func (k *KrakenApi) GetAllBtcOrders() ([]rest.Ledger, error) {
-	ledgers, err := k.api.GetLedgersInfo("trade", 0, 0, "XXBT", "ZEUR")
+	ledgers, err := k.api.GetLedgersInfo("", 0, 0, "XXBT")
 	if err != nil {
 		return nil, err
 	}
@@ -71,15 +71,7 @@ func (k *KrakenApi) GetAllBtcOrders() ([]rest.Ledger, error) {
 	var orders []rest.Ledger
 
 	for _, order := range ledgers {
-		if order.Asset != "XXBT" && order.Asset != "ZEUR" {
-			continue
-		}
-
 		if order.Asset == "XXBT" && (order.LedgerType == "spend" || order.LedgerType == "margin" || order.LedgerType == "withdrawal" || order.LedgerType == "rollover" || order.Amount < 0) {
-			continue
-		}
-
-		if order.Asset == "ZEUR" && (order.LedgerType != "trade") {
 			continue
 		}
 

@@ -3,8 +3,8 @@ package xPub
 import (
 	"time"
 
-	"github.com/Primexz/Kraken-InvestMetrics/blockchain"
 	"github.com/Primexz/Kraken-InvestMetrics/config"
+	"github.com/Primexz/Kraken-InvestMetrics/modules/blockchain"
 
 	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"

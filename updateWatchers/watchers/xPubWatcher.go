@@ -3,7 +3,7 @@ package watcherClient
 import (
 	"time"
 
-	"github.com/Primexz/Kraken-InvestMetrics/xPub"
+	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
 	"github.com/primexz/KrakenDCA/logger"
 )
 
