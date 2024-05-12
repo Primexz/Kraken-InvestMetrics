@@ -42,6 +42,10 @@ func (pw *PurchaseWatcher) UpdateData() {
 
 	for _, p := range purchases {
 		time := time.Unix(int64(p.Time), 0)
-		timescale.ConnectionPool.Exec(timescale.Context, "INSERT INTO purchases (refid, time, amount, fee) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING", p.RefID, time, p.Amount, p.Fee)
+
+		_, err := timescale.ConnectionPool.Exec(timescale.Context, "INSERT INTO purchases (refid, time, amount, fee) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING", p.RefID, time, p.Amount, p.Fee)
+		if err != nil {
+			pw.log.Error("failed to add purchase to db", err)
+		}
 	}
 }
