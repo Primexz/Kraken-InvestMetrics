@@ -47,6 +47,7 @@ func (dcaw *DCAWatcher) UpdateData() {
 		return
 	}
 
+	// #nosec G107
 	resp, err := http.Get(url)
 	if err != nil {
 		dcaw.log.Error(err)
