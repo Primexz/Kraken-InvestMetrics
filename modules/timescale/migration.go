@@ -14,7 +14,8 @@ func migrateTimescale() {
 		btc_price_usd DOUBLE PRECISION,
 		btc_in_wallet DOUBLE PRECISION,
 		eur_in_wallet DOUBLE PRECISION,
-		total_scrape_time DOUBLE PRECISION
+		total_scrape_time DOUBLE PRECISION,
+		next_dca_order_time TIMESTAMPTZ
 	);`)
 
 	// #nosec G104

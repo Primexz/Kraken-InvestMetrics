@@ -13,6 +13,7 @@ var (
 	TimescaleConnectionString string
 	BitcoinAccount            int
 	BitcoinAddressGapLimit    int
+	DCABotMetricUrl           string
 
 	log *logger.Logger
 )
@@ -29,6 +30,7 @@ func loadConfiguration() {
 	KrakenPrivateKey = loadRequiredEnvVariable("KRAKEN_PRIVATE_KEY")
 	BitcoinAddress = loadRequiredEnvVariable("INVEST_EXPORTER_BTC_ADDR")
 	TimescaleConnectionString = loadRequiredEnvVariable("TIMESCALE_CONNECTION_STRING")
+	DCABotMetricUrl = loadFallbackEnvVariable("DCA_BOT_METRIC_URL", "")
 	BitcoinAccount = 0
 	BitcoinAddressGapLimit = 20
 }

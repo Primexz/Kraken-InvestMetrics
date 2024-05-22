@@ -10,6 +10,7 @@ var (
 	XPubWatcher     *watcherClient.XPubWatcher
 	KrakenWatcher   *watcherClient.KrakenWatcher
 	PurchaseWatcher *watcherClient.PurchaseWatcher
+	DCAWatcher      *watcherClient.DCAWatcher
 
 	log *logger.Logger
 )
@@ -31,4 +32,7 @@ func BootstrapWatchers() {
 
 	PurchaseWatcher = watcherClient.NewPurchaseWatcher()
 	PurchaseWatcher.StartRoutine()
+
+	DCAWatcher = watcherClient.NewDCAWatcher()
+	DCAWatcher.StartRoutine()
 }
