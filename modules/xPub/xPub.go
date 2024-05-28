@@ -36,7 +36,22 @@ func NewXPub() *XPub {
 }
 
 func (x *XPub) GetTotalSats() (float64, error) {
-	bitcoinArray := make([]float64, 0)
+	addressMap, err := x.GetAddressSatMap()
+	if err != nil {
+		log.Error("Failed to get address map:", err)
+		return 0, err
+	}
+
+	var total float64
+	for _, sat := range addressMap {
+		total += sat
+	}
+
+	return total, nil
+}
+
+func (x *XPub) GetAddressSatMap() (map[string]float64, error) {
+	bitcoinMap := make(map[string]float64)
 	searchEnd := config.BitcoinAddressGapLimit
 
 	i := 0
@@ -47,14 +62,14 @@ func (x *XPub) GetTotalSats() (float64, error) {
 		data, err := blockchain.GetAddressInfo(address)
 		if err != nil {
 			log.Error("Failed to resolve address:", err)
-			return 0, err
+			return nil, err
 		}
 
 		fundedSum := float64(data.ChainStats.FundedTxoSum)
 		spentSum := float64(data.ChainStats.SpentTxoSum)
 
 		if fundedSum > 0 {
-			bitcoinArray = append(bitcoinArray, fundedSum-spentSum)
+			bitcoinMap[address] = fundedSum - spentSum
 			searchEnd += 1
 		}
 
@@ -62,7 +77,7 @@ func (x *XPub) GetTotalSats() (float64, error) {
 		time.Sleep(250 * time.Millisecond)
 	}
 
-	return Sum(bitcoinArray), nil
+	return bitcoinMap, nil
 }
 
 func (x *XPub) getAddressFromIndex(index int) string {

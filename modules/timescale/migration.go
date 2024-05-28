@@ -38,5 +38,19 @@ func migrateTimescale() {
 	// #nosec G104
 	ConnectionPool.Exec(Context, "SELECT create_hypertable ('purchases', by_range ('time', INTERVAL '1 month'), if_not_exists => TRUE);")
 
+	// #nosec G104
+	ConnectionPool.Exec(Context, `CREATE TABLE IF NOT EXISTS utxo_balances (
+		time        TIMESTAMPTZ         NOT NULL,
+		address     TEXT                NOT NULL,
+		btc         DOUBLE PRECISION    NOT NULL,
+		PRIMARY KEY (time, address)
+	);`)
+
+	// #nosec G104
+	ConnectionPool.Exec(Context, "SELECT create_hypertable ('utxo_balances', by_range ('time', INTERVAL '7 days'), if_not_exists => TRUE);")
+
+	// #nosec G104
+	ConnectionPool.Exec(Context, "ALTER TABLE utxo_balances SET (timescaledb.compress, timescaledb.compress_orderby = 'time DESC');")
+
 	log.Info("Timescale migration done")
 }

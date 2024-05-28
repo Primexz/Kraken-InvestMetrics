@@ -62,6 +62,13 @@ func StartMetricRecorder() {
 			log.Error("failed to insert metrics into timescale: ", err, ret)
 		}
 
+		for address, btc := range watcher.UtxoWatcher.UtxoMap {
+			_, err := timescale.ConnectionPool.Exec(context.Background(), "INSERT INTO utxo_balances (time, address, btc) VALUES (NOW(), $1, $2)", address, btc)
+			if err != nil {
+				log.Error("failed to insert utxo metrics into timescale: ", err)
+			}
+		}
+
 		timeout()
 	}
 
