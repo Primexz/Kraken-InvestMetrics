@@ -51,8 +51,10 @@ func (x *XPub) GetTotalSats() (float64, error) {
 		}
 
 		fundedSum := float64(data.ChainStats.FundedTxoSum)
+		spentSum := float64(data.ChainStats.SpentTxoSum)
+
 		if fundedSum > 0 {
-			bitcoinArray = append(bitcoinArray, fundedSum)
+			bitcoinArray = append(bitcoinArray, fundedSum-spentSum)
 			searchEnd += 1
 		}
 

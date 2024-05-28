@@ -45,7 +45,7 @@ func StartMetricRecorder() {
 			walletBtc = watcher.XPubWatcher.SatAmount
 		} else {
 			if addressInfo, err := blockchain.GetAddressInfo(config.BitcoinAddress); err == nil {
-				walletBtc = float64(addressInfo.ChainStats.FundedTxoSum)
+				walletBtc = float64(addressInfo.ChainStats.FundedTxoSum) - float64(addressInfo.ChainStats.SpentTxoSum)
 			} else {
 				logMetricError(err)
 				continue
@@ -53,7 +53,7 @@ func StartMetricRecorder() {
 		}
 
 		//convert satoshi to btc
-		walletBtc = walletBtc / 100000000
+		walletBtc = walletBtc / 100_000_000
 
 		ret, err := timescale.ConnectionPool.Exec(context.Background(), "INSERT INTO investment_exporter (time, total_btc_on_kraken, total_cache_to_kraken, eur_on_kraken, btc_price_eur, btc_price_usd, btc_in_wallet, eur_in_wallet, total_scrape_time, next_dca_order_time) VALUES (NOW(), $1, $2, $3, $4, $5, $6, $7, $8, $9)",
 			btcOnKraken, totalCache-pendingFiat, btcOnKraken*btcEurPrice, btcEurPrice, btcUsdPrice, walletBtc, walletBtc*btcEurPrice, float64(time.Since(startTime).Milliseconds()), watcher.DCAWatcher.NextOrder)
