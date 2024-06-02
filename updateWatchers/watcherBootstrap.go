@@ -1,8 +1,6 @@
 package watcher
 
 import (
-	"time"
-
 	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
 	watcherClient "github.com/Primexz/Kraken-InvestMetrics/updateWatchers/watchers"
 	"github.com/primexz/KrakenDCA/logger"
@@ -28,8 +26,6 @@ func BootstrapWatchers() {
 	if xPub.IsXPub() {
 		XPubWatcher = watcherClient.NewXPubWatcher()
 		XPubWatcher.StartRoutine()
-
-		time.Sleep(5 * time.Second)
 
 		UtxoWatcher = watcherClient.NewUtxoWatcher()
 		UtxoWatcher.StartRoutine()

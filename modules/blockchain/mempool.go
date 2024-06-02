@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
+
+	"github.com/phuslu/lru"
 )
 
 type DifficultyAdjustmentInfo struct {
@@ -30,7 +33,13 @@ type AddressInfo struct {
 	} `json:"chain_stats"`
 }
 
+var cache = lru.NewTTLCache[string, AddressInfo](1000)
+
 func GetAddressInfo(addr string) (AddressInfo, error) {
+	if addressInfo, ok := cache.Get(addr); ok {
+		return addressInfo, nil
+	}
+
 	resp, err := http.Get("https://mempool.space/api/address/" + addr)
 	if err != nil {
 		return AddressInfo{}, err
@@ -47,6 +56,8 @@ func GetAddressInfo(addr string) (AddressInfo, error) {
 	if err := json.Unmarshal(body, &result); err != nil {
 		return AddressInfo{}, fmt.Errorf("failed to unmarshal response: %w %s", err, string(body))
 	}
+
+	cache.Set(addr, result, time.Minute*2)
 
 	return result, nil
 }
