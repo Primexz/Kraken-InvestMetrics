@@ -28,7 +28,7 @@ func NewUtxoWatcher() *UtxoWatcher {
 func (u *UtxoWatcher) StartRoutine() {
 	go func() {
 		for {
-			time.Sleep(5 * time.Minute)
+			time.Sleep(30 * time.Minute)
 
 			u.UpdateUtxoData()
 		}
