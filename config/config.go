@@ -14,6 +14,7 @@ var (
 	BitcoinAccount            int
 	BitcoinAddressGapLimit    int
 	DCABotMetricUrl           string
+	ElectrumServerAddress     string
 
 	log *logger.Logger
 )
@@ -31,6 +32,8 @@ func loadConfiguration() {
 	BitcoinAddress = loadRequiredEnvVariable("INVEST_EXPORTER_BTC_ADDR")
 	TimescaleConnectionString = loadRequiredEnvVariable("TIMESCALE_CONNECTION_STRING")
 	DCABotMetricUrl = loadFallbackEnvVariable("DCA_BOT_METRIC_URL", "")
+	ElectrumServerAddress = loadRequiredEnvVariable("ELECTRUM_SERVER_ADDRESS")
+
 	BitcoinAccount = 0
 	BitcoinAddressGapLimit = 20
 }

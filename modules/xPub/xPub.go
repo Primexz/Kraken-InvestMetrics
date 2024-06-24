@@ -5,6 +5,7 @@ import (
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/blockchain"
+	"github.com/checksum0/go-electrum/electrum"
 
 	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"
@@ -59,17 +60,28 @@ func (x *XPub) GetAddressSatMap() (map[string]float64, error) {
 		address := x.getAddressFromIndex(i)
 		log.Info("Computing bitcoin address ", i, address)
 
-		data, err := blockchain.GetAddressInfo(address)
+		scriptHash, err := electrum.AddressToElectrumScriptHash(address)
+		if err != nil {
+			log.Error("Failed to convert address to script hash:", err)
+			return nil, err
+		}
+
+		balance, err := blockchain.Client.GetBalance(blockchain.Ctx, scriptHash)
 		if err != nil {
 			log.Error("Failed to resolve address:", err)
 			return nil, err
 		}
 
-		fundedSum := float64(data.ChainStats.FundedTxoSum)
-		spentSum := float64(data.ChainStats.SpentTxoSum)
+		history, err := blockchain.Client.GetHistory(blockchain.Ctx, scriptHash)
+		if err != nil {
+			log.Error("Failed to get history:", err)
+			return nil, err
+		}
 
-		if fundedSum > 0 {
-			bitcoinMap[address] = fundedSum - spentSum
+		confirmed := balance.Confirmed
+
+		if len(history) > 0 {
+			bitcoinMap[address] = confirmed
 			searchEnd += 1
 		}
 

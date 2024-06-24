@@ -44,8 +44,8 @@ func StartMetricRecorder() {
 		if xPub.IsXPub() {
 			walletBtc = watcher.XPubWatcher.SatAmount
 		} else {
-			if addressInfo, err := blockchain.GetAddressInfo(config.BitcoinAddress); err == nil {
-				walletBtc = float64(addressInfo.ChainStats.FundedTxoSum) - float64(addressInfo.ChainStats.SpentTxoSum)
+			if balance, err := blockchain.GetBalance(config.BitcoinAddress); err == nil {
+				walletBtc = balance
 			} else {
 				logMetricError(err)
 				continue
@@ -63,7 +63,7 @@ func StartMetricRecorder() {
 		}
 
 		for address, btc := range watcher.UtxoWatcher.UtxoMap {
-			_, err := timescale.ConnectionPool.Exec(context.Background(), "INSERT INTO utxo_balances (time, address, btc) VALUES (NOW(), $1, $2)", address, btc)
+			_, err := timescale.ConnectionPool.Exec(context.Background(), "INSERT INTO utxo_balances (address, btc) VALUES ($1, $2) ON CONFLICT (address) DO UPDATE SET btc = $2", address, btc)
 			if err != nil {
 				log.Error("failed to insert utxo metrics into timescale: ", err)
 			}
