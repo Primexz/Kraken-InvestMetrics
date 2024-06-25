@@ -47,7 +47,7 @@ func (k *KrakenApi) GetPendingEuroOnKraken() (decimal.Decimal, error) {
 }
 
 func (k *KrakenApi) GetCachePayedToKraken() (float64, error) {
-	ledgerInfo, err := k.api.GetLedgersInfo("", 0, 0, "ZEUR")
+	ledgerInfo, err := k.api.GetLedgersInfo("", 0, 0, false, "ZEUR")
 	if err != nil {
 		return 0, err
 	}
@@ -62,8 +62,8 @@ func (k *KrakenApi) GetCachePayedToKraken() (float64, error) {
 	return totalCachePayedToKraken, nil
 }
 
-func (k *KrakenApi) GetAllBtcOrders() ([]rest.Ledger, error) {
-	ledgers, err := k.api.GetLedgersInfo("", 0, 0, "XXBT")
+func (k *KrakenApi) GetAllBtcOrders(latestOnly bool) ([]rest.Ledger, error) {
+	ledgers, err := k.api.GetLedgersInfo("", 0, 0, latestOnly, "XXBT")
 	if err != nil {
 		return nil, err
 	}

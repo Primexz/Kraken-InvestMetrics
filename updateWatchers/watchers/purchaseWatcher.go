@@ -34,7 +34,8 @@ func (pw *PurchaseWatcher) StartRoutine() {
 func (pw *PurchaseWatcher) UpdateData() {
 	pw.log.Info("Updating Purchase Watcher")
 
-	purchases, err := pw.api.GetAllBtcOrders()
+	//if the row count is greater than 50, then we only want to get the last 50 purchases
+	purchases, err := pw.api.GetAllBtcOrders(pw.getPurchasesRowCount() > 50)
 	if err != nil {
 		pw.log.Error(err)
 		return
@@ -48,4 +49,14 @@ func (pw *PurchaseWatcher) UpdateData() {
 			pw.log.Error("failed to add purchase to db", err)
 		}
 	}
+}
+
+func (pw *PurchaseWatcher) getPurchasesRowCount() int {
+	var count int
+	err := timescale.ConnectionPool.QueryRow(timescale.Context, "SELECT COUNT(*) FROM purchases").Scan(&count)
+	if err != nil {
+		pw.log.Error("failed to get row count", err)
+	}
+
+	return count
 }
