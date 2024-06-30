@@ -6,6 +6,7 @@ import (
 	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/blockchain"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/sirupsen/logrus"
 )
 
@@ -20,17 +21,15 @@ type WalletWatcher struct {
 
 func NewWalletWatcher() *WalletWatcher {
 	return &WalletWatcher{
-		xPub: xPub.NewXPub(),
-		log: logrus.WithFields(logrus.Fields{
-			"prefix": "xpub_watcher",
-		}),
+		xPub:     xPub.NewXPub(),
+		log:      util.LoggerWithPrefix("wallet_watcher"),
 		interval: 5 * time.Minute,
 	}
 }
 
 func (ww *WalletWatcher) UpdateData() {
 
-	if xPub.IsXPub() {
+	if util.IsXPub() {
 		if amount, err := ww.xPub.GetTotalSats(); err != nil {
 			ww.SatAmount = amount
 		} else {

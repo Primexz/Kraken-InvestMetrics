@@ -5,14 +5,12 @@ import (
 	"time"
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/checksum0/go-electrum/electrum"
-	"github.com/sirupsen/logrus"
 )
 
 var (
-	log = logrus.WithFields(logrus.Fields{
-		"prefix": "electrum",
-	})
+	log = util.LoggerWithPrefix("electrum")
 
 	Client *electrum.Client
 	Ctx    = context.TODO()

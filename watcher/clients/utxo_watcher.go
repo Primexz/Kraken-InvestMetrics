@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,10 +18,8 @@ type UtxoWatcher struct {
 
 func NewUtxoWatcher() *UtxoWatcher {
 	return &UtxoWatcher{
-		xPub: xPub.NewXPub(),
-		log: logrus.WithFields(logrus.Fields{
-			"prefix": "utxo_watcher",
-		}),
+		xPub:     xPub.NewXPub(),
+		log:      util.LoggerWithPrefix("utxo_watcher"),
 		interval: 5 * time.Minute,
 	}
 }

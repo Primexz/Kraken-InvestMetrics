@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/Primexz/Kraken-InvestMetrics/modules/kraken"
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/sirupsen/logrus"
 )
 
@@ -20,9 +21,7 @@ type KrakenWatcher struct {
 
 func NewKrakenWatcher() *KrakenWatcher {
 	return &KrakenWatcher{
-		log: logrus.WithFields(logrus.Fields{
-			"prefix": "kraken_watcher",
-		}),
+		log:      util.LoggerWithPrefix("kraken_watcher"),
 		api:      kraken.NewKraken(),
 		interval: 30 * time.Second,
 	}

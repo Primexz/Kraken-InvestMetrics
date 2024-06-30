@@ -4,6 +4,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,9 +18,7 @@ type WatcherManager struct {
 
 func NewWatcherManager() *WatcherManager {
 	return &WatcherManager{
-		log: logrus.WithFields(logrus.Fields{
-			"prefix": "watcher_manager",
-		}),
+		log: util.LoggerWithPrefix("watcher_manager"),
 	}
 }
 
@@ -33,7 +32,7 @@ func (wm *WatcherManager) StartAllWatchers() {
 	wm.log.Info("Starting all watcher clients")
 
 	for _, w := range wm.watchers {
-		go func(w Watcher) {
+		go func() {
 			for {
 				wm.mu.Lock()
 
@@ -48,7 +47,7 @@ func (wm *WatcherManager) StartAllWatchers() {
 
 				<-time.After(w.GetInterval())
 			}
-		}(w)
+		}()
 
 		wm.log.Debugf("Started watcher: %T", w)
 	}

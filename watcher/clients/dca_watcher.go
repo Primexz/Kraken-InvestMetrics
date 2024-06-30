@@ -5,6 +5,7 @@ import (
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
 	jsonRequest "github.com/Primexz/Kraken-InvestMetrics/modules/http"
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/sirupsen/logrus"
 )
 
@@ -21,9 +22,7 @@ type DCAWatcher struct {
 
 func NewDCAWatcher() *DCAWatcher {
 	return &DCAWatcher{
-		log: logrus.WithFields(logrus.Fields{
-			"prefix": "dca_bot_watcher",
-		}),
+		log:      util.LoggerWithPrefix("dca_bot_watcher"),
 		interval: 30 * time.Second,
 	}
 }

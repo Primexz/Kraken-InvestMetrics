@@ -5,8 +5,8 @@ import (
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/blockchain"
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/checksum0/go-electrum/electrum"
-	"github.com/sirupsen/logrus"
 
 	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"
@@ -19,14 +19,12 @@ type XPub struct {
 }
 
 var (
-	log = logrus.WithFields(logrus.Fields{
-		"prefix": "x_pub",
-	})
+	log = util.LoggerWithPrefix("xpub")
 )
 
 func NewXPub() *XPub {
 	addr := config.C.BitcoinAddress
-	if !IsXPub() {
+	if !util.IsXPub() {
 		panic("Invalid xPub address " + addr)
 	}
 

@@ -1,4 +1,4 @@
-package xPub
+package util
 
 import (
 	"strings"

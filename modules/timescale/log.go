@@ -1,9 +1,9 @@
 package timescale
 
-import "github.com/sirupsen/logrus"
+import (
+	"github.com/Primexz/Kraken-InvestMetrics/util"
+)
 
 var (
-	log = logrus.WithFields(logrus.Fields{
-		"prefix": "timescale",
-	})
+	log = util.LoggerWithPrefix("timescale")
 )

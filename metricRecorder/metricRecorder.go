@@ -6,14 +6,12 @@ import (
 
 	"github.com/Primexz/Kraken-InvestMetrics/modules/kraken"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/timescale"
+	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/Primexz/Kraken-InvestMetrics/watcher"
-	"github.com/sirupsen/logrus"
 )
 
 var (
-	log = logrus.WithFields(logrus.Fields{
-		"prefix": "metric_recorder",
-	})
+	log = util.LoggerWithPrefix("metric_recorder")
 )
 
 func StartMetricRecorder() {
