@@ -4,7 +4,6 @@ import (
 	"runtime"
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
-	"github.com/Primexz/Kraken-InvestMetrics/metricRecorder"
 	"github.com/Primexz/Kraken-InvestMetrics/watcher"
 
 	log "github.com/sirupsen/logrus"
@@ -34,5 +33,7 @@ func main() {
 
 	watcher.Load()
 
-	metricRecorder.StartMetricRecorder()
+	select {}
+
+	// metricRecorder.StartMetricRecorder()
 }

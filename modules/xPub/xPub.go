@@ -1,8 +1,6 @@
 package xPub
 
 import (
-	"time"
-
 	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/blockchain"
 	"github.com/Primexz/Kraken-InvestMetrics/util"
@@ -84,7 +82,6 @@ func (x *XPub) GetAddressSatMap() (map[string]float64, error) {
 		}
 
 		i++
-		time.Sleep(250 * time.Millisecond)
 	}
 
 	return bitcoinMap, nil
