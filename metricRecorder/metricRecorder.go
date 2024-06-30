@@ -13,9 +13,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var log = logrus.WithFields(logrus.Fields{
-	"prefix": "metric_recorder",
-})
+var (
+	log = logrus.WithFields(logrus.Fields{
+		"prefix": "metric_recorder",
+	})
+)
 
 func StartMetricRecorder() {
 	log.Info("Initializing metric recorder")

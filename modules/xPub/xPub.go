@@ -18,9 +18,11 @@ type XPub struct {
 	account int
 }
 
-var log = logrus.WithFields(logrus.Fields{
-	"prefix": "x_pub",
-})
+var (
+	log = logrus.WithFields(logrus.Fields{
+		"prefix": "x_pub",
+	})
+)
 
 func NewXPub() *XPub {
 	addr := config.C.BitcoinAddress
