@@ -6,11 +6,11 @@ import (
 	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/blockchain"
 	"github.com/checksum0/go-electrum/electrum"
+	"github.com/sirupsen/logrus"
 
 	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"
 	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/primexz/KrakenDCA/logger"
 )
 
 type XPub struct {
@@ -18,11 +18,9 @@ type XPub struct {
 	account int
 }
 
-var log *logger.Logger
-
-func init() {
-	log = logger.NewLogger("xpub")
-}
+var log = logrus.WithFields(logrus.Fields{
+	"prefix": "x_pub",
+})
 
 func NewXPub() *XPub {
 	addr := config.C.BitcoinAddress

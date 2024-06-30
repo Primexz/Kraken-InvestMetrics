@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/Primexz/Kraken-InvestMetrics/modules/kraken"
-	"github.com/primexz/KrakenDCA/logger"
+	"github.com/sirupsen/logrus"
 )
 
 type KrakenWatcher struct {
@@ -12,13 +12,15 @@ type KrakenWatcher struct {
 	BtcOnKraken   float64
 	PendingFiat   float64
 
-	log *logger.Logger
+	log *logrus.Entry
 	api *kraken.KrakenApi
 }
 
 func NewKrakenWatcher() *KrakenWatcher {
 	kw := &KrakenWatcher{
-		log: logger.NewLogger("wkraken"),
+		log: logrus.WithFields(logrus.Fields{
+			"prefix": "kraken_watcher",
+		}),
 		api: kraken.NewKraken(),
 	}
 

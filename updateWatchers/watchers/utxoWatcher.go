@@ -4,20 +4,22 @@ import (
 	"time"
 
 	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
-	"github.com/primexz/KrakenDCA/logger"
+	"github.com/sirupsen/logrus"
 )
 
 type UtxoWatcher struct {
 	UtxoMap map[string]float64
 	xPub    *xPub.XPub
 
-	log *logger.Logger
+	log *logrus.Entry
 }
 
 func NewUtxoWatcher() *UtxoWatcher {
 	u := &UtxoWatcher{
 		xPub: xPub.NewXPub(),
-		log:  logger.NewLogger("utxow"),
+		log: logrus.WithFields(logrus.Fields{
+			"prefix": "utxo_watcher",
+		}),
 	}
 
 	u.UpdateUtxoData()

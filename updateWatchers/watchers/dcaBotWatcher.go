@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
-	"github.com/primexz/KrakenDCA/logger"
+	"github.com/sirupsen/logrus"
 )
 
 type MetricResponse struct {
@@ -17,12 +17,14 @@ type MetricResponse struct {
 type DCAWatcher struct {
 	NextOrder time.Time
 
-	log *logger.Logger
+	log *logrus.Entry
 }
 
 func NewDCAWatcher() *DCAWatcher {
 	kw := &DCAWatcher{
-		log: logger.NewLogger("dcawatcher"),
+		log: logrus.WithFields(logrus.Fields{
+			"prefix": "dca_bot_watcher",
+		}),
 	}
 
 	kw.UpdateData()

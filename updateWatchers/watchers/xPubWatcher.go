@@ -4,20 +4,22 @@ import (
 	"time"
 
 	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
-	"github.com/primexz/KrakenDCA/logger"
+	"github.com/sirupsen/logrus"
 )
 
 type XPubWatcher struct {
 	SatAmount float64
 	xPub      *xPub.XPub
 
-	log *logger.Logger
+	log *logrus.Entry
 }
 
 func NewXPubWatcher() *XPubWatcher {
 	xw := &XPubWatcher{
 		xPub: xPub.NewXPub(),
-		log:  logger.NewLogger("wxpub"),
+		log: logrus.WithFields(logrus.Fields{
+			"prefix": "xpub_watcher",
+		}),
 	}
 
 	xw.UpdateCoinAmount()

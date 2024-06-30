@@ -1,24 +1,35 @@
 package main
 
 import (
-	"fmt"
 	"runtime"
 
+	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/metricRecorder"
 	watcher "github.com/Primexz/Kraken-InvestMetrics/updateWatchers"
-	"github.com/primexz/KrakenDCA/logger"
-)
-
-var (
-	log *logger.Logger
+	log "github.com/sirupsen/logrus"
+	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
 func init() {
-	log = logger.NewLogger("main")
+	log.SetFormatter(&prefixed.TextFormatter{
+		TimestampFormat:  "2006/01/02 - 15:04:05",
+		FullTimestamp:    true,
+		QuoteEmptyFields: true,
+		SpacePadding:     45,
+	})
+
+	log.SetReportCaller(true)
+
+	level, err := log.ParseLevel(config.C.LogLevel)
+	if err != nil {
+		log.WithError(err).Fatal("Invalid log level")
+	}
+
+	log.SetLevel(level)
 }
 
 func main() {
-	log.Info(fmt.Sprintf("Kraken Invest Metrics 🐙 %s, commit %s, built at %s (%s [%s, %s])", version, commit, date, runtime.Version(), runtime.GOOS, runtime.GOARCH))
+	log.Infof("Kraken Invest Metrics 🐙 %s, commit %s, built at %s (%s [%s, %s])", version, commit, date, runtime.Version(), runtime.GOOS, runtime.GOARCH)
 
 	watcher.BootstrapWatchers()
 	go metricRecorder.StartMetricRecorder()

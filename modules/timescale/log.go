@@ -1,5 +1,7 @@
 package timescale
 
-import "github.com/primexz/KrakenDCA/logger"
+import "github.com/sirupsen/logrus"
 
-var log = logger.NewLogger("timescale")
+var log = logrus.WithFields(logrus.Fields{
+	"prefix": "timescale",
+})

@@ -3,7 +3,7 @@ package watcher
 import (
 	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
 	watcherClient "github.com/Primexz/Kraken-InvestMetrics/updateWatchers/watchers"
-	"github.com/primexz/KrakenDCA/logger"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -13,12 +13,10 @@ var (
 	DCAWatcher      *watcherClient.DCAWatcher
 	UtxoWatcher     *watcherClient.UtxoWatcher
 
-	log *logger.Logger
+	log = logrus.WithFields(logrus.Fields{
+		"prefix": "dca_bot_watcher",
+	})
 )
-
-func init() {
-	log = logger.NewLogger("watcher")
-}
 
 func BootstrapWatchers() {
 	log.Info("Boostrapping watchers..")

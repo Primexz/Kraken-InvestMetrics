@@ -7,7 +7,6 @@ require (
 	github.com/btcsuite/btcd v0.24.0
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/jackc/pgx/v5 v5.5.5
-	github.com/primexz/KrakenDCA v1.2.4
 	github.com/shopspring/decimal v1.3.1
 )
 
@@ -16,6 +15,12 @@ require (
 	github.com/caarlos0/env/v11 v11.1.0 // indirect
 	github.com/checksum0/go-electrum v0.0.0-20220912200153-b862ac442cf9 // indirect
 	github.com/decred/dcrd/crypto/blake256 v1.0.0 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/x-cray/logrus-prefixed-formatter v0.5.2 // indirect
+	golang.org/x/term v0.19.0 // indirect
 )
 
 require (

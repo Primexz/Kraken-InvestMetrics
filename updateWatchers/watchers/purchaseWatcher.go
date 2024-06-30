@@ -5,17 +5,19 @@ import (
 
 	"github.com/Primexz/Kraken-InvestMetrics/modules/kraken"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/timescale"
-	"github.com/primexz/KrakenDCA/logger"
+	"github.com/sirupsen/logrus"
 )
 
 type PurchaseWatcher struct {
-	log *logger.Logger
+	log *logrus.Entry
 	api *kraken.KrakenApi
 }
 
 func NewPurchaseWatcher() *PurchaseWatcher {
 	pw := &PurchaseWatcher{
-		log: logger.NewLogger("purchaseWatcher"),
+		log: logrus.WithFields(logrus.Fields{
+			"prefix": "purchase_watcher",
+		}),
 		api: kraken.NewKraken(),
 	}
 

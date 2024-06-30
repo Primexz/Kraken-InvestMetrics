@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/caarlos0/env/v11"
-	"github.com/primexz/KrakenDCA/logger"
+	"github.com/sirupsen/logrus"
 )
 
 type config struct {
@@ -14,15 +14,19 @@ type config struct {
 	BitcoinAddressGapLimit    int    `env:"INVEST_EXPORTER_BTC_GAP_LIMIT" envDefault:"20"`
 	DCABotMetricUrl           string `env:"DCA_BOT_METRIC_URL"`
 	ElectrumServerAddress     string `env:"ELECTRUM_SERVER_ADDRESS,required"`
+
+	LogLevel string `env:"LOG_LEVEL" envDefault:"info"`
 }
 
 var (
-	log *logger.Logger
-	C   config
+	log = logrus.WithFields(logrus.Fields{
+		"prefix": "config",
+	})
+
+	C config
 )
 
 func init() {
-	log = logger.NewLogger("config")
 	loadConfiguration()
 }
 
