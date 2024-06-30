@@ -1,4 +1,4 @@
-package watcherClient
+package watcher_client
 
 import (
 	"time"
@@ -14,34 +14,21 @@ type KrakenWatcher struct {
 
 	log *logrus.Entry
 	api *kraken.KrakenApi
+
+	interval time.Duration
 }
 
 func NewKrakenWatcher() *KrakenWatcher {
-	kw := &KrakenWatcher{
+	return &KrakenWatcher{
 		log: logrus.WithFields(logrus.Fields{
 			"prefix": "kraken_watcher",
 		}),
-		api: kraken.NewKraken(),
+		api:      kraken.NewKraken(),
+		interval: 30 * time.Second,
 	}
-
-	kw.UpdateData()
-
-	return kw
-}
-
-func (kw *KrakenWatcher) StartRoutine() {
-	go func() {
-		for {
-			time.Sleep(2 * time.Minute)
-
-			kw.UpdateData()
-		}
-	}()
 }
 
 func (kw *KrakenWatcher) UpdateData() {
-	kw.log.Info("Updating Kraken Watcher")
-
 	cacheToKraken, err := kw.api.GetCachePayedToKraken()
 	if err != nil {
 		kw.log.Error("Error getting Kraken data: ", err)
@@ -63,4 +50,8 @@ func (kw *KrakenWatcher) UpdateData() {
 	kw.CacheToKraken = cacheToKraken
 	kw.BtcOnKraken, _ = btcOnKraken.Float64()
 	kw.PendingFiat, _ = pendingFiat.Float64()
+}
+
+func (kw *KrakenWatcher) GetInterval() time.Duration {
+	return kw.interval
 }

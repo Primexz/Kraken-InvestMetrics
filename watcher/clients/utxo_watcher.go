@@ -1,4 +1,4 @@
-package watcherClient
+package watcher_client
 
 import (
 	"time"
@@ -11,35 +11,21 @@ type UtxoWatcher struct {
 	UtxoMap map[string]float64
 	xPub    *xPub.XPub
 
-	log *logrus.Entry
+	log      *logrus.Entry
+	interval time.Duration
 }
 
 func NewUtxoWatcher() *UtxoWatcher {
-	u := &UtxoWatcher{
+	return &UtxoWatcher{
 		xPub: xPub.NewXPub(),
 		log: logrus.WithFields(logrus.Fields{
 			"prefix": "utxo_watcher",
 		}),
+		interval: 5 * time.Minute,
 	}
-
-	u.UpdateUtxoData()
-
-	return u
 }
 
-func (u *UtxoWatcher) StartRoutine() {
-	go func() {
-		for {
-			time.Sleep(30 * time.Minute)
-
-			u.UpdateUtxoData()
-		}
-	}()
-}
-
-func (u *UtxoWatcher) UpdateUtxoData() {
-	u.log.Info("Updating UTXO Watcher")
-
+func (u *UtxoWatcher) UpdateData() {
 	utxoMap, err := u.xPub.GetAddressSatMap()
 	if err != nil {
 		u.log.Error("failed to get utxo map", err)
@@ -53,4 +39,8 @@ func (u *UtxoWatcher) UpdateUtxoData() {
 	}
 
 	u.UtxoMap = bitcoinMap
+}
+
+func (u *UtxoWatcher) GetInterval() time.Duration {
+	return u.interval
 }

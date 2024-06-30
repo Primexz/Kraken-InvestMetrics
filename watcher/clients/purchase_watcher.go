@@ -1,4 +1,4 @@
-package watcherClient
+package watcher_client
 
 import (
 	"time"
@@ -11,31 +11,21 @@ import (
 type PurchaseWatcher struct {
 	log *logrus.Entry
 	api *kraken.KrakenApi
+
+	interval time.Duration
 }
 
 func NewPurchaseWatcher() *PurchaseWatcher {
-	pw := &PurchaseWatcher{
+	return &PurchaseWatcher{
 		log: logrus.WithFields(logrus.Fields{
 			"prefix": "purchase_watcher",
 		}),
-		api: kraken.NewKraken(),
+		api:      kraken.NewKraken(),
+		interval: 5 * time.Minute,
 	}
-
-	return pw
-}
-
-func (pw *PurchaseWatcher) StartRoutine() {
-	go func() {
-		for {
-			pw.UpdateData()
-			time.Sleep(5 * time.Minute)
-		}
-	}()
 }
 
 func (pw *PurchaseWatcher) UpdateData() {
-	pw.log.Info("Updating Purchase Watcher")
-
 	//if the row count is greater than 50, then we only want to get the last 50 purchases
 	purchases, err := pw.api.GetAllBtcOrders(pw.getPurchasesRowCount() > 50)
 	if err != nil {
@@ -51,6 +41,10 @@ func (pw *PurchaseWatcher) UpdateData() {
 			pw.log.Error("failed to add purchase to db", err)
 		}
 	}
+}
+
+func (pw *PurchaseWatcher) GetInterval() time.Duration {
+	return pw.interval
 }
 
 func (pw *PurchaseWatcher) getPurchasesRowCount() int {

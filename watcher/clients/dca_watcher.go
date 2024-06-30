@@ -1,4 +1,4 @@
-package watcherClient
+package watcher_client
 
 import (
 	"time"
@@ -13,35 +13,22 @@ type MetricResponse struct {
 }
 
 type DCAWatcher struct {
-	NextOrder time.Time
+	interval time.Duration
 
-	log *logrus.Entry
+	NextOrder time.Time
+	log       *logrus.Entry
 }
 
 func NewDCAWatcher() *DCAWatcher {
-	kw := &DCAWatcher{
+	return &DCAWatcher{
 		log: logrus.WithFields(logrus.Fields{
 			"prefix": "dca_bot_watcher",
 		}),
+		interval: 30 * time.Second,
 	}
-
-	kw.UpdateData()
-
-	return kw
-}
-
-func (dcaw *DCAWatcher) StartRoutine() {
-	go func() {
-		for {
-			dcaw.UpdateData()
-			time.Sleep(30 * time.Second)
-		}
-	}()
 }
 
 func (dcaw *DCAWatcher) UpdateData() {
-	dcaw.log.Info("Updating DCA-Bot Watcher")
-
 	url := config.C.DCABotMetricUrl
 	if url == "" {
 		return
@@ -54,4 +41,8 @@ func (dcaw *DCAWatcher) UpdateData() {
 	}
 	dcaw.NextOrder = time.Unix(resp.NextOrder, 0)
 	dcaw.log.Info("Next DCA order at ", dcaw.NextOrder)
+}
+
+func (dcaw *DCAWatcher) GetInterval() time.Duration {
+	return dcaw.interval
 }

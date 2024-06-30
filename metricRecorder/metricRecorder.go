@@ -9,7 +9,7 @@ import (
 	"github.com/Primexz/Kraken-InvestMetrics/modules/kraken"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/timescale"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/xPub"
-	watcher "github.com/Primexz/Kraken-InvestMetrics/updateWatchers"
+	"github.com/Primexz/Kraken-InvestMetrics/watcher"
 	"github.com/sirupsen/logrus"
 )
 
@@ -46,7 +46,7 @@ func StartMetricRecorder() {
 		var walletBtc float64
 
 		if xPub.IsXPub() {
-			walletBtc = watcher.XPubWatcher.SatAmount
+			walletBtc = watcher.XpubWatcher.SatAmount
 		} else {
 			if balance, err := blockchain.GetBalance(config.C.BitcoinAddress); err == nil {
 				walletBtc = balance

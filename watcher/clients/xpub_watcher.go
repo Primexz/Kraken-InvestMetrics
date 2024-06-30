@@ -1,4 +1,4 @@
-package watcherClient
+package watcher_client
 
 import (
 	"time"
@@ -11,35 +11,21 @@ type XPubWatcher struct {
 	SatAmount float64
 	xPub      *xPub.XPub
 
-	log *logrus.Entry
+	log      *logrus.Entry
+	interval time.Duration
 }
 
 func NewXPubWatcher() *XPubWatcher {
-	xw := &XPubWatcher{
+	return &XPubWatcher{
 		xPub: xPub.NewXPub(),
 		log: logrus.WithFields(logrus.Fields{
 			"prefix": "xpub_watcher",
 		}),
+		interval: 5 * time.Minute,
 	}
-
-	xw.UpdateCoinAmount()
-
-	return xw
 }
 
-func (xw *XPubWatcher) StartRoutine() {
-	go func() {
-		for {
-			time.Sleep(5 * time.Minute)
-
-			xw.UpdateCoinAmount()
-		}
-	}()
-}
-
-func (xw *XPubWatcher) UpdateCoinAmount() {
-	xw.log.Info("Updating xPub Watcher")
-
+func (xw *XPubWatcher) UpdateData() {
 	amount, err := xw.xPub.GetTotalSats()
 	if err != nil {
 		xw.log.Error("failed to get total bitcoin amount", err)
@@ -47,4 +33,8 @@ func (xw *XPubWatcher) UpdateCoinAmount() {
 	}
 
 	xw.SatAmount = amount
+}
+
+func (xw *XPubWatcher) GetInterval() time.Duration {
+	return xw.interval
 }

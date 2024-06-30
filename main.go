@@ -5,7 +5,8 @@ import (
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/metricRecorder"
-	watcher "github.com/Primexz/Kraken-InvestMetrics/updateWatchers"
+	"github.com/Primexz/Kraken-InvestMetrics/watcher"
+
 	log "github.com/sirupsen/logrus"
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
@@ -31,8 +32,7 @@ func init() {
 func main() {
 	log.Infof("Kraken Invest Metrics 🐙 %s, commit %s, built at %s (%s [%s, %s])", version, commit, date, runtime.Version(), runtime.GOOS, runtime.GOARCH)
 
-	watcher.BootstrapWatchers()
-	go metricRecorder.StartMetricRecorder()
+	watcher.Load()
 
-	select {}
+	metricRecorder.StartMetricRecorder()
 }
