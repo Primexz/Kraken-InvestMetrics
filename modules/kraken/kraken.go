@@ -1,13 +1,11 @@
 package kraken
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"strconv"
 
 	"github.com/Primexz/Kraken-InvestMetrics/config"
+	jsonRequest "github.com/Primexz/Kraken-InvestMetrics/modules/http"
 	"github.com/Primexz/go_kraken/rest"
 	"github.com/shopspring/decimal"
 )
@@ -82,23 +80,14 @@ func (k *KrakenApi) GetAllBtcOrders(latestOnly bool) ([]rest.Ledger, error) {
 }
 
 func (k *KrakenApi) GetCurrentBtcPriceEur(unit string) (float64, error) {
-	resp, err := http.Get(fmt.Sprintf("https://api.kraken.com/0/public/Spread?pair=%s", unit))
+	url := fmt.Sprintf("https://api.kraken.com/0/public/Spread?pair=%s", unit)
+
+	resp, err := jsonRequest.GetJSON[KrakenSpread](url)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("failed to get kraken spread: %v", resp.Error)
 	}
 
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return 0, err
-	}
-
-	var result KrakenSpread
-	if err := json.Unmarshal(body, &result); err != nil {
-		return 0, err
-	}
-
-	allEurPrices := result.Result[unit].([]interface{})
+	allEurPrices := resp.Result[unit].([]interface{})
 	latestEurPrices := allEurPrices[len(allEurPrices)-1].([]interface{})
 	currentEurPrice := latestEurPrices[len(latestEurPrices)-1]
 
