@@ -30,7 +30,7 @@ func NewWalletWatcher() *WalletWatcher {
 func (ww *WalletWatcher) UpdateData() {
 
 	if util.IsXPub() {
-		if amount, err := ww.xPub.GetTotalSats(); err != nil {
+		if amount, err := ww.xPub.GetTotalSats(); err == nil {
 			ww.SatAmount = amount
 		} else {
 			ww.log.Error("failed to get total bitcoin amount", err)
