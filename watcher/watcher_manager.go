@@ -40,6 +40,8 @@ func (wm *WatcherManager) StartAllWatchers() {
 		wg.Add(1)
 
 		go func() {
+			initial := true
+
 			for {
 				wm.mu.Lock()
 
@@ -50,7 +52,11 @@ func (wm *WatcherManager) StartAllWatchers() {
 				wm.log.Infof("Updated data for watcher: %T in %v", w, time.Since(start))
 
 				wm.mu.Unlock()
-				wg.Done()
+
+				if initial {
+					wg.Done()
+					initial = false
+				}
 
 				<-time.After(w.GetInterval())
 			}
