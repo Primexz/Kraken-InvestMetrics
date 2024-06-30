@@ -9,7 +9,7 @@ var (
 	KrakenWatcher   = watcher_client.NewKrakenWatcher()
 	PurchaseWatcher = watcher_client.NewPurchaseWatcher()
 	UtxoWatcher     = watcher_client.NewUtxoWatcher()
-	XpubWatcher     = watcher_client.NewXPubWatcher()
+	WalletWatcher   = watcher_client.NewWalletWatcher()
 
 	manager = NewWatcherManager()
 )
@@ -20,7 +20,7 @@ func Load() {
 		KrakenWatcher,
 		PurchaseWatcher,
 		UtxoWatcher,
-		XpubWatcher,
+		WalletWatcher,
 	}
 
 	for _, watcher := range watchers {
