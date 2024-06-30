@@ -10,7 +10,9 @@ import (
 type WatcherManager struct {
 	watchers []Watcher
 	log      *logrus.Entry
-	mu       sync.Mutex
+
+	//we need a mutex to initialize the watchers (running in a goroutine) in a sequential order
+	mu sync.Mutex
 }
 
 func NewWatcherManager() *WatcherManager {
