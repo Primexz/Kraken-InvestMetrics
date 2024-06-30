@@ -42,7 +42,7 @@ func (dcaw *DCAWatcher) StartRoutine() {
 func (dcaw *DCAWatcher) UpdateData() {
 	dcaw.log.Info("Updating DCA-Bot Watcher")
 
-	url := config.DCABotMetricUrl
+	url := config.C.DCABotMetricUrl
 	if url == "" {
 		return
 	}

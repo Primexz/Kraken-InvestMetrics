@@ -20,7 +20,7 @@ func init() {
 func initConnectionPool() {
 	Context = context.Background()
 
-	dbpool, err := pgxpool.New(Context, config.TimescaleConnectionString)
+	dbpool, err := pgxpool.New(Context, config.C.TimescaleConnectionString)
 	if err != nil {
 		log.Fatal("failed to connect to timescale-db! ", err)
 	}

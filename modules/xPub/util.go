@@ -7,7 +7,7 @@ import (
 )
 
 func IsXPub() bool {
-	return strings.HasPrefix(config.BitcoinAddress, "xpub")
+	return strings.HasPrefix(config.C.BitcoinAddress, "xpub")
 }
 
 func Sum(arr []float64) float64 {

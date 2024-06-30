@@ -44,7 +44,7 @@ func StartMetricRecorder() {
 		if xPub.IsXPub() {
 			walletBtc = watcher.XPubWatcher.SatAmount
 		} else {
-			if balance, err := blockchain.GetBalance(config.BitcoinAddress); err == nil {
+			if balance, err := blockchain.GetBalance(config.C.BitcoinAddress); err == nil {
 				walletBtc = balance
 			} else {
 				logMetricError(err)

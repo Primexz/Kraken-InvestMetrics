@@ -24,7 +24,7 @@ type KrakenSpread struct {
 
 func NewKraken() *KrakenApi {
 	return &KrakenApi{
-		api: rest.New(config.KrakenPublicKey, config.KrakenPrivateKey),
+		api: rest.New(config.C.KrakenPublicKey, config.C.KrakenPrivateKey),
 	}
 }
 

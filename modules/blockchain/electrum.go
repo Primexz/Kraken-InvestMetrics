@@ -16,7 +16,7 @@ var (
 )
 
 func init() {
-	electrum, err := electrum.NewClientTCP(Ctx, config.ElectrumServerAddress)
+	electrum, err := electrum.NewClientTCP(Ctx, config.C.ElectrumServerAddress)
 	if err != nil {
 		log.Fatal("failed to connect to electrum server", err)
 	}

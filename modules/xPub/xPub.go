@@ -25,14 +25,14 @@ func init() {
 }
 
 func NewXPub() *XPub {
-	addr := config.BitcoinAddress
+	addr := config.C.BitcoinAddress
 	if !IsXPub() {
 		panic("Invalid xPub address " + addr)
 	}
 
 	return &XPub{
 		address: addr,
-		account: config.BitcoinAccount,
+		account: config.C.BitcoinAccount,
 	}
 }
 
@@ -53,7 +53,7 @@ func (x *XPub) GetTotalSats() (float64, error) {
 
 func (x *XPub) GetAddressSatMap() (map[string]float64, error) {
 	bitcoinMap := make(map[string]float64)
-	searchEnd := config.BitcoinAddressGapLimit
+	searchEnd := config.C.BitcoinAddressGapLimit
 
 	i := 0
 	for i <= searchEnd {
