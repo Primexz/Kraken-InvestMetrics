@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/caarlos0/env/v11"
+	"github.com/sirupsen/logrus"
 )
 
 type config struct {
@@ -19,7 +19,9 @@ type config struct {
 }
 
 var (
-	log = util.LoggerWithPrefix("config")
+	log = logrus.WithFields(logrus.Fields{
+		"prefix": "config",
+	})
 
 	C config
 )
