@@ -55,8 +55,8 @@ func StartMetricRecorder() {
 		//convert satoshi to btc
 		walletBtc = walletBtc / 100_000_000
 
-		ret, err := timescale.ConnectionPool.Exec(context.Background(), "INSERT INTO investment_exporter (time, total_btc_on_kraken, total_cache_to_kraken, eur_on_kraken, btc_price_eur, btc_price_usd, btc_in_wallet, eur_in_wallet, total_scrape_time, next_dca_order_time) VALUES (NOW(), $1, $2, $3, $4, $5, $6, $7, $8, $9)",
-			btcOnKraken, totalCache-pendingFiat, btcOnKraken*btcEurPrice, btcEurPrice, btcUsdPrice, walletBtc, walletBtc*btcEurPrice, float64(time.Since(startTime).Milliseconds()), watcher.DCAWatcher.NextOrder)
+		ret, err := timescale.ConnectionPool.Exec(context.Background(), "INSERT INTO investment_exporter (time, total_btc_on_kraken, total_cache_to_kraken, eur_on_kraken, btc_price_eur, btc_price_usd, btc_in_wallet, eur_in_wallet, total_scrape_time, next_dca_order_time, pending_fiat) VALUES (NOW(), $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+			btcOnKraken, totalCache-pendingFiat, btcOnKraken*btcEurPrice, btcEurPrice, btcUsdPrice, walletBtc, walletBtc*btcEurPrice, float64(time.Since(startTime).Milliseconds()), watcher.DCAWatcher.NextOrder, pendingFiat)
 
 		if err != nil {
 			log.Error("failed to insert metrics into timescale: ", err, ret)
