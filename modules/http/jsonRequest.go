@@ -8,6 +8,7 @@ import (
 )
 
 func GetJSON[T any](url string) (*T, error) {
+	// #nosec G107
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("http request failed: %v", err)
