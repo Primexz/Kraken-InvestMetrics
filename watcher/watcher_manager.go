@@ -31,7 +31,14 @@ func (wm *WatcherManager) RegisterWatcher(w Watcher) {
 func (wm *WatcherManager) StartAllWatchers() {
 	wm.log.Info("Starting all watcher clients")
 
+	var (
+		wg       sync.WaitGroup
+		finished = make(chan struct{})
+	)
+
 	for _, w := range wm.watchers {
+		wg.Add(1)
+
 		go func() {
 			for {
 				wm.mu.Lock()
@@ -42,8 +49,8 @@ func (wm *WatcherManager) StartAllWatchers() {
 				w.UpdateData()
 				wm.log.Infof("Updated data for watcher: %T in %v", w, time.Since(start))
 
-				//we cannot use a defer here because we need to unlock the mutex before the sleep
 				wm.mu.Unlock()
+				wg.Done()
 
 				<-time.After(w.GetInterval())
 			}
@@ -51,4 +58,12 @@ func (wm *WatcherManager) StartAllWatchers() {
 
 		wm.log.Debugf("Started watcher: %T", w)
 	}
+
+	go func() {
+		wg.Wait()
+		close(finished)
+	}()
+
+	<-finished
+	wm.log.Info("All watchers have completed their initial updates")
 }
