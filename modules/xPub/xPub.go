@@ -5,6 +5,7 @@ import (
 	"github.com/Primexz/Kraken-InvestMetrics/modules/blockchain"
 	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/checksum0/go-electrum/electrum"
+	"github.com/sirupsen/logrus"
 
 	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"
@@ -54,7 +55,10 @@ func (x *XPub) GetAddressSatMap() (map[string]float64, error) {
 	i := 0
 	for i <= searchEnd {
 		address := x.getAddressFromIndex(i)
-		log.Info("Computing bitcoin address ", i, address)
+		log.WithFields(logrus.Fields{
+			"index":   i,
+			"address": address,
+		}).Info("Computing bitcoin address ")
 
 		scriptHash, err := electrum.AddressToElectrumScriptHash(address)
 		if err != nil {

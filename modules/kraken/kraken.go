@@ -84,7 +84,7 @@ func (k *KrakenApi) GetCurrentBtcPriceEur(unit string) (float64, error) {
 
 	resp, err := jsonRequest.GetJSON[KrakenSpread](url)
 	if err != nil {
-		return 0, fmt.Errorf("failed to get kraken spread: %v", resp.Error)
+		return 0, fmt.Errorf("failed to get kraken spread: %v", resp)
 	}
 
 	allEurPrices := resp.Result[unit].([]interface{})
