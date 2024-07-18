@@ -3,7 +3,7 @@ module github.com/Primexz/Kraken-InvestMetrics
 go 1.22
 
 require (
-	github.com/Primexz/go_kraken v0.1.8
+	github.com/Primexz/go_kraken v0.1.9
 	github.com/btcsuite/btcd v0.24.0
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/jackc/pgx/v5 v5.5.5

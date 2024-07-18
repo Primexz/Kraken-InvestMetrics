@@ -30,19 +30,19 @@ func NewKrakenWatcher() *KrakenWatcher {
 func (kw *KrakenWatcher) UpdateData() {
 	cacheToKraken, err := kw.api.GetCachePayedToKraken()
 	if err != nil {
-		kw.log.Error("Error getting Kraken data: ", err)
+		kw.log.Error("Error getting cache payed to kraken: ", err)
 		return
 	}
 
 	btcOnKraken, err := kw.api.GetBtcOnKraken()
 	if err != nil {
-		kw.log.Error("Error getting Kraken data: ", err)
+		kw.log.Error("Error getting btc on kraken: ", err)
 		return
 	}
 
 	pendingFiat, err := kw.api.GetPendingEuroOnKraken()
 	if err != nil {
-		kw.log.Error("Error getting Kraken data: ", err)
+		kw.log.Error("Error getting pending euro: ", err)
 		return
 	}
 

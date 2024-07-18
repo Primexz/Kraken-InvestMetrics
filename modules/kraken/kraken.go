@@ -45,7 +45,7 @@ func (k *KrakenApi) GetPendingEuroOnKraken() (decimal.Decimal, error) {
 }
 
 func (k *KrakenApi) GetCachePayedToKraken() (float64, error) {
-	ledgerInfo, err := k.api.GetLedgersInfo("", 0, 0, false, "ZEUR")
+	ledgerInfo, err := k.api.GetLedgersInfo("deposit", 0, 0, false, "ZEUR")
 	if err != nil {
 		return 0, err
 	}
