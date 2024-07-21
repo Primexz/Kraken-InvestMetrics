@@ -58,7 +58,7 @@ func (x *XPub) GetAddressSatMap() (map[string]float64, error) {
 		log.WithFields(logrus.Fields{
 			"index":   i,
 			"address": address,
-		}).Info("Computing bitcoin address ")
+		}).Debug("Computing bitcoin address ")
 
 		scriptHash, err := electrum.AddressToElectrumScriptHash(address)
 		if err != nil {
