@@ -14,10 +14,10 @@ type KrakenApi struct {
 	api *rest.Kraken
 }
 
-type KrakenSpread struct {
-	Error  []interface{}          `json:"error"`
-	Result map[string]interface{} `json:"result"`
-	Last   int                    `json:"last"`
+type KrakenTickerInfo struct {
+	Result map[string]struct {
+		LastTrade []string `json:"c"`
+	} `json:"result"`
 }
 
 func NewKraken() *KrakenApi {
@@ -79,22 +79,25 @@ func (k *KrakenApi) GetAllBtcOrders(latestOnly bool) ([]rest.Ledger, error) {
 	return orders, nil
 }
 
-func (k *KrakenApi) GetCurrentBtcPriceEur(unit string) (float64, error) {
-	url := fmt.Sprintf("https://api.kraken.com/0/public/Spread?pair=%s", unit)
+func (k *KrakenApi) GetCurrentBtcPrice(unit string) (float64, error) {
+	pair := fmt.Sprintf("XXBTZ%s", unit)
 
-	resp, err := jsonRequest.GetJSON[KrakenSpread](url)
+	url := fmt.Sprintf("https://api.kraken.com/0/public/Ticker?pair=%s", pair)
+
+	resp, err := jsonRequest.GetJSON[KrakenTickerInfo](url)
 	if err != nil {
-		return 0, fmt.Errorf("failed to get kraken spread: %v", resp)
+		return 0, fmt.Errorf("failed to get btc price: %v %v", resp, err)
 	}
 
-	allEurPrices := resp.Result[unit].([]interface{})
-	latestEurPrices := allEurPrices[len(allEurPrices)-1].([]interface{})
-	currentEurPrice := latestEurPrices[len(latestEurPrices)-1]
-
-	parsedEurPrice, err := strconv.ParseFloat(currentEurPrice.(string), 32)
-	if err != nil {
-		return 0, err
+	tickerInfo, ok := resp.Result[pair]
+	if !ok {
+		return 0, fmt.Errorf("failed to find btc price: %v", resp)
 	}
 
-	return parsedEurPrice, nil
+	priceFloat, err := strconv.ParseFloat(tickerInfo.LastTrade[0], 64)
+	if err != nil {
+		return 0, fmt.Errorf("failed to parse btc price: %v", resp)
+	}
+
+	return priceFloat, nil
 }

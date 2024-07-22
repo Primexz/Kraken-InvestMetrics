@@ -26,13 +26,13 @@ func StartMetricRecorder() {
 		totalCache := watcher.KrakenWatcher.CacheToKraken
 		pendingFiat := watcher.KrakenWatcher.PendingFiat
 
-		btcEurPrice, err := kraken.GetCurrentBtcPriceEur("XXBTZEUR")
+		btcEurPrice, err := kraken.GetCurrentBtcPrice("EUR")
 		if err != nil {
 			logMetricError(err)
 			continue
 		}
 
-		btcUsdPrice, err := kraken.GetCurrentBtcPriceEur("XXBTZUSD")
+		btcUsdPrice, err := kraken.GetCurrentBtcPrice("USD")
 		if err != nil {
 			logMetricError(err)
 			continue
