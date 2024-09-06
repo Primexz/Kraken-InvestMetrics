@@ -28,7 +28,6 @@ func NewWalletWatcher() *WalletWatcher {
 }
 
 func (ww *WalletWatcher) UpdateData() {
-
 	if util.IsXPub() {
 		if amount, err := ww.xPub.GetTotalSats(); err == nil {
 			ww.SatAmount = amount
