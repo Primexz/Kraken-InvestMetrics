@@ -14,6 +14,7 @@ type config struct {
 	BitcoinAddressGapLimit    int    `env:"INVEST_EXPORTER_BTC_GAP_LIMIT" envDefault:"20"`
 	DCABotMetricUrl           string `env:"DCA_BOT_METRIC_URL"`
 	ElectrumServerAddress     string `env:"ELECTRUM_SERVER_ADDRESS,required"`
+	CacheOffset               int    `env:"CACHE_OFFSET" envDefault:"0"`
 
 	LogLevel string `env:"LOG_LEVEL" envDefault:"info"`
 }

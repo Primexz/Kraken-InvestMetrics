@@ -3,6 +3,7 @@ package watcher_client
 import (
 	"time"
 
+	"github.com/Primexz/Kraken-InvestMetrics/config"
 	"github.com/Primexz/Kraken-InvestMetrics/modules/kraken"
 	"github.com/Primexz/Kraken-InvestMetrics/util"
 	"github.com/sirupsen/logrus"
@@ -46,7 +47,7 @@ func (kw *KrakenWatcher) UpdateData() {
 		return
 	}
 
-	kw.CacheToKraken = cacheToKraken
+	kw.CacheToKraken = cacheToKraken + float64(config.C.CacheOffset)
 	kw.BtcOnKraken, _ = btcOnKraken.Float64()
 	kw.PendingFiat, _ = pendingFiat.Float64()
 }
