@@ -39,7 +39,7 @@ func StartMetricRecorder() {
 		}
 
 		//convert satoshi to btc
-		var walletBtc = watcher.WalletWatcher.SatAmount / 100_000_000
+		var walletBtc = (watcher.WalletWatcher.SatAmount + float64(watcher.LNDWatcher.SatAmount)) / 100_000_000
 		var timeSpent = float64(time.Since(startTime).Milliseconds())
 
 		ret, err := timescale.ConnectionPool.Exec(context.Background(), "INSERT INTO investment_exporter (time, total_btc_on_kraken, total_cache_to_kraken, btc_price_eur, btc_price_usd, btc_in_wallet, total_scrape_time, next_dca_order_time, pending_fiat) VALUES (NOW(), $1, $2, $3, $4, $5, $6, $7, $8)",

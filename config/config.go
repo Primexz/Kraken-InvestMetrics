@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/caarlos0/env/v11"
+	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 )
 
@@ -15,6 +16,11 @@ type config struct {
 	DCABotMetricUrl           string `env:"DCA_BOT_METRIC_URL"`
 	ElectrumServerAddress     string `env:"ELECTRUM_SERVER_ADDRESS,required"`
 	CacheOffset               int    `env:"CACHE_OFFSET" envDefault:"0"`
+
+	LndRpcAddress string `env:"LND_RPC_ADDRESS"`
+	LndMacaroon   string `env:"LND_MACAROON"`
+	LndTlsCert    string `env:"LND_TLS_CERT"`
+	LndNetwork    string `env:"LND_NETWORK" envDefault:"mainnet"`
 
 	LogLevel string `env:"LOG_LEVEL" envDefault:"info"`
 }
@@ -32,6 +38,8 @@ func init() {
 }
 
 func loadConfiguration() {
+	_ = godotenv.Load()
+
 	if config, err := env.ParseAs[config](); err == nil {
 		C = config
 	} else {
