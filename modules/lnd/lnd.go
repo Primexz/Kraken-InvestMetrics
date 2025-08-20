@@ -39,5 +39,5 @@ func (l *LndClient) GetTotalBalance() (int64, error) {
 	}
 
 	// #nosec G115
-	return walletBalance.TotalBalance + int64(channelBalance.LocalBalance.Sat), nil
+	return walletBalance.TotalBalance + int64(channelBalance.LocalBalance.Sat) + int64(channelBalance.UnsettledRemoteBalance.Sat), nil
 }
