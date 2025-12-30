@@ -5,7 +5,7 @@ go 1.23.6
 toolchain go1.24.2
 
 require (
-	github.com/Primexz/go_kraken v0.1.9
+	github.com/Primexz/go_kraken v0.1.10
 	github.com/btcsuite/btcd v0.24.3-0.20250318170759-4f4ea81776d6
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/caarlos0/env/v11 v11.3.1
@@ -13,6 +13,7 @@ require (
 	github.com/jackc/pgx/v5 v5.5.5
 	github.com/joho/godotenv v1.5.1
 	github.com/lightninglabs/lndclient v0.19.0-12
+	github.com/lightningnetwork/lnd v0.19.0-beta
 	github.com/shopspring/decimal v1.3.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
@@ -92,7 +93,6 @@ require (
 	github.com/lightninglabs/neutrino v0.16.1 // indirect
 	github.com/lightninglabs/neutrino/cache v1.1.2 // indirect
 	github.com/lightningnetwork/lightning-onion v1.2.1-0.20240712235311-98bd56499dfb // indirect
-	github.com/lightningnetwork/lnd v0.19.0-beta // indirect
 	github.com/lightningnetwork/lnd/clock v1.1.1 // indirect
 	github.com/lightningnetwork/lnd/fn/v2 v2.0.8 // indirect
 	github.com/lightningnetwork/lnd/healthcheck v1.2.6 // indirect

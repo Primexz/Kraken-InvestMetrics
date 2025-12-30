@@ -17,8 +17,8 @@ github.com/Microsoft/go-winio v0.6.1 h1:9/kr64B9VUZrLm5YYwbGtUJnMgqWVOdUAXu6Migc
 github.com/Microsoft/go-winio v0.6.1/go.mod h1:LRdKpFKfdobln8UmuiYcKPot9D2v6svN5+sAH+4kjUM=
 github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5 h1:TngWCqHvy9oXAN6lEVMRuU21PR1EtLVZJmdB18Gu3Rw=
 github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5/go.mod h1:lmUJ/7eu/Q8D7ML55dXQrVaamCz2vxCfdQBasLZfHKk=
-github.com/Primexz/go_kraken v0.1.9 h1:BfoyXIfsU1gSxipfDRvcmvXhTqNJ9j+eVg4pGJ+QPDg=
-github.com/Primexz/go_kraken v0.1.9/go.mod h1:T3DC9V+nbaIf3q2KCvCrf6RA81N1HEptRZg5PW4/6Gg=
+github.com/Primexz/go_kraken v0.1.10 h1:4S8apfKDlqRmZkCka8ZuoGVHrRseRYAT/8O0xILHPL8=
+github.com/Primexz/go_kraken v0.1.10/go.mod h1:T3DC9V+nbaIf3q2KCvCrf6RA81N1HEptRZg5PW4/6Gg=
 github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da h1:KjTM2ks9d14ZYCvmHS9iAKVt9AyzRSqNU1qabPih5BY=
 github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da/go.mod h1:eHEWzANqSiWQsof+nXEI9bUVUyV6F53Fp89EuCh2EAA=
 github.com/aead/siphash v1.0.1 h1:FwHfE/T45KPKYuuSAKyyvE+oPWcaQ+CUmFW0bPlM+kg=
