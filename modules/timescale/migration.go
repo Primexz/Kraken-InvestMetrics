@@ -8,12 +8,9 @@ func migrateTimescale() {
 		time TIMESTAMPTZ NOT NULL,
 		total_btc_on_kraken DOUBLE PRECISION,
 		total_cache_to_kraken DOUBLE PRECISION,
-		total_kraken_fees_lost DOUBLE PRECISION,
-		eur_on_kraken DOUBLE PRECISION,
 		btc_price_eur DOUBLE PRECISION,
 		btc_price_usd DOUBLE PRECISION,
 		btc_in_wallet DOUBLE PRECISION,
-		eur_in_wallet DOUBLE PRECISION,
 		pending_fiat DOUBLE PRECISION,
 		total_scrape_time DOUBLE PRECISION,
 		next_dca_order_time TIMESTAMPTZ
